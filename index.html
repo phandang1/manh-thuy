@@ -1147,9 +1147,18 @@
       list-style: none;
       display: flex;
       flex-direction: row;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      overflow-x: auto;
       gap: 10px;
-      margin-top: 28px;
+      margin-top: 24px;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .checkout-benefits::-webkit-scrollbar {
+      display: none;
     }
 
     .checkout-benefits li {
@@ -1167,6 +1176,7 @@
       -webkit-backdrop-filter: blur(5px);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       transition: all 0.2s ease;
+      flex-shrink: 0;
     }
 
     .checkout-benefits li:hover {
@@ -1317,8 +1327,10 @@
         text-align: center;
       }
       .checkout-benefits {
-        justify-content: center;
+        justify-content: flex-start;
         margin-top: 24px;
+        padding-left: 4px;
+        padding-right: 4px;
       }
       .checkout-form-container {
         max-width: 600px;
