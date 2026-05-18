@@ -1996,61 +1996,64 @@
           </ul>
         </div>
 
-        <div class="checkout-form-container">
-          <h3 style="color: var(--charcoal); margin-bottom: 20px;">Thông Tin Đặt Hàng Nhanh</h3>
+        <div class="checkout-form-container" style="padding: 24px;">
+          <h3 style="color: var(--charcoal); margin-bottom: 16px; font-size: 19px; border-bottom: 1px solid var(--border-grey); padding-bottom: 8px;">Thông Tin Đặt Hàng</h3>
           
           <form onsubmit="event.preventDefault(); showSuccessModal();">
-            <div class="form-group">
-              <label class="form-label" for="fullname">Họ tên của bạn *</label>
-              <input class="form-input" type="text" id="fullname" placeholder="Ví dụ: Nguyễn Văn A" required>
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="fullname" style="margin-bottom: 6px;">Họ tên *</label>
+                <input class="form-input" type="text" id="fullname" placeholder="Họ và tên" required style="height: 42px; padding: 8px 12px; font-size: 14px;">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="phone" style="margin-bottom: 6px;">Số điện thoại *</label>
+                <input class="form-input" type="tel" id="phone" placeholder="Số điện thoại" required style="height: 42px; padding: 8px 12px; font-size: 14px;">
+              </div>
             </div>
             
-            <div class="form-group">
-              <label class="form-label" for="phone">Số điện thoại *</label>
-              <input class="form-input" type="tel" id="phone" placeholder="Ví dụ: 0987654321" required>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label" for="address" style="margin-bottom: 6px;">Địa chỉ nhận hàng *</label>
+              <input class="form-input" type="text" id="address" placeholder="Số nhà, tên đường, phường/xã, quận/huyện" required style="height: 42px; padding: 8px 12px; font-size: 14px;">
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="address">Địa chỉ nhận hàng *</label>
-              <input class="form-input" type="text" id="address" placeholder="Số nhà, tên đường, phường/xã, quận/huyện" required>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label" for="notes" style="margin-bottom: 6px;">Ghi chú (Nếu có)</label>
+              <input class="form-input" type="text" id="notes" placeholder="Ví dụ: Giao ngoài giờ hành chính..." style="height: 42px; padding: 8px 12px; font-size: 14px;">
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="notes">Ghi chú (Nếu có)</label>
-              <textarea class="form-input" id="notes" placeholder="Ví dụ: Giao ngoài giờ hành chính, gọi trước khi giao,..." style="height: 80px; resize: none; padding: 12px 16px;"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Chọn số lượng sản phẩm</label>
-              <div class="quantity-selector">
-                <button type="button" class="qty-btn" onclick="let input = document.getElementById('quantity'); if(parseInt(input.value) > 1) { input.value = parseInt(input.value) - 1; updatePrice(); }">-</button>
-                <input class="qty-input" type="number" id="quantity" value="1" min="1" readonly>
-                <button type="button" class="qty-btn" onclick="let input = document.getElementById('quantity'); input.value = parseInt(input.value) + 1; updatePrice();">+</button>
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 14px; align-items: center; margin-bottom: 12px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" style="margin-bottom: 6px;">Số lượng hũ</label>
+                <div class="quantity-selector" style="gap: 8px;">
+                  <button type="button" class="qty-btn" style="width: 36px; height: 36px; font-size: 16px;" onclick="let input = document.getElementById('quantity'); if(parseInt(input.value) > 1) { input.value = parseInt(input.value) - 1; updatePrice(); }">-</button>
+                  <input class="qty-input" type="number" id="quantity" value="1" min="1" readonly style="width: 40px; height: 36px; font-size: 14px;">
+                  <button type="button" class="qty-btn" style="width: 36px; height: 36px; font-size: 16px;" onclick="let input = document.getElementById('quantity'); input.value = parseInt(input.value) + 1; updatePrice();">+</button>
+                </div>
               </div>
-              <div style="font-size: 13px; color: var(--dark-grey); margin-top: 10px; line-height: 1.5; background-color: var(--ghost-grey); padding: 12px 14px; border-radius: var(--radius-compact); border-left: 3px solid var(--steel-blue); text-align: left;">
-                📌 <strong>Quy cách:</strong> 1 hũ 500ml (quét ~3.5m²) + Tặng kèm cọ quét chuyên dụng!
-                <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-grey); font-weight: 700; color: var(--deep-navy); line-height: 1.4;">
-                  👉 Bạn chọn <span id="qty-display" style="color: var(--steel-blue);">1</span> hũ: Quét được khoảng <span id="area-display" style="color: var(--steel-blue);">3.5</span> m² bề mặt
+              <div style="font-size: 12px; color: var(--dark-grey); line-height: 1.4; background-color: var(--ghost-grey); padding: 8px 12px; border-radius: var(--radius-compact); border-left: 3px solid var(--steel-blue); text-align: left; margin-top: 18px;">
+                <strong><span id="qty-display">1</span> hũ 500ml (+ cọ)</strong>
+                <div style="font-weight: 700; color: var(--steel-blue); margin-top: 2px;">
+                  👉 Quét được ~<span id="area-display">3.5</span> m²
                 </div>
               </div>
             </div>
 
-            <div class="order-summary">
-              <div class="summary-row">
+            <div class="order-summary" style="padding: 12px 14px; margin-bottom: 14px; background: var(--ghost-grey); border-radius: var(--radius-compact); border: 1px solid var(--border-grey);">
+              <div class="summary-row" style="margin-bottom: 8px; font-size: 13.5px; display: flex; justify-content: space-between;">
                 <span style="color: var(--dark-grey);">Đơn giá sản phẩm:</span>
                 <span id="unit-price" style="color: var(--charcoal); font-weight: 700;">169.000đ / hũ (+ cọ)</span>
               </div>
-              <div class="summary-row">
+              <div class="summary-row" style="margin-bottom: 8px; font-size: 13.5px; display: flex; justify-content: space-between;">
                 <span style="color: var(--dark-grey);">Phí vận chuyển:</span>
                 <span id="shipping-fee" style="color: var(--charcoal); font-weight: 700;">20.000đ</span>
               </div>
-              <div class="summary-row total">
-                <span>Tổng tiền phải trả:</span>
+              <div class="summary-row total" style="padding-top: 8px; font-size: 16px; border-top: 1px dashed var(--border-grey); display: flex; justify-content: space-between; font-weight: 700; color: var(--deep-navy);">
+                <span>Tổng tiền:</span>
                 <span id="total-price" style="color: var(--steel-blue);">189.000đ</span>
               </div>
             </div>
 
-            <button type="submit" class="btn-submit">Xác nhận đặt hàng ngay</button>
+            <button type="submit" class="btn-submit" style="height: 46px; font-size: 14px;">Xác nhận đặt hàng ngay</button>
           </form>
         </div>
       </div>
