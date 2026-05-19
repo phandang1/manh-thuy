@@ -2125,7 +2125,8 @@
               </div>
               <div class="form-group" style="margin-bottom: 0;">
                 <label class="form-label" for="phone" style="margin-bottom: 6px;">Số điện thoại *</label>
-                <input class="form-input" type="tel" id="phone" placeholder="Số điện thoại" required style="height: 42px; padding: 8px 12px; font-size: 14px;">
+                <input class="form-input" type="tel" id="phone" placeholder="Số điện thoại" required maxlength="12" style="height: 42px; padding: 8px 12px; font-size: 14px; transition: border-color 0.2s;">
+                <div id="phone-error" style="color: var(--danger); font-size: 11px; margin-top: 4px; display: none; font-weight: 500; text-align: left; line-height: 1.4;"></div>
               </div>
             </div>
             
@@ -2389,7 +2390,22 @@
       e.preventDefault();
       
       const fullname = document.getElementById('fullname').value;
-      const phone = document.getElementById('phone').value;
+      const phoneInput = document.getElementById('phone');
+      const phone = phoneInput.value;
+      const phoneClean = phone.replace(/[^0-9]/g, '');
+      const phonePattern = /^0[0-9]{9}$/;
+      
+      if (!phonePattern.test(phoneClean)) {
+        const errorDiv = document.getElementById('phone-error');
+        if (errorDiv) {
+          errorDiv.innerText = 'Số điện thoại bắt đầu bằng số 0 và đủ 10 số';
+          errorDiv.style.display = 'block';
+        }
+        phoneInput.style.borderColor = 'var(--danger)';
+        alert('Số điện thoại không hợp lệ! Vui lòng nhập đủ 10 chữ số và bắt đầu bằng số 0 (ví dụ: 098 765 4321).');
+        phoneInput.focus();
+        return;
+      }
       const address = document.getElementById('address').value;
       const notes = document.getElementById('notes').value || '';
       const quantity = document.getElementById('quantity').value;
@@ -2526,6 +2542,56 @@
           closeBtn.innerHTML = 'Đồng ý';
         }
       }, 1000);
+    }
+
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+      // 1. Khi đang gõ: Tự động phân tách dạng XXX XXX XXXX để khách dễ nhìn, ẩn thông báo lỗi
+      phoneInput.addEventListener('input', function(e) {
+        // Chỉ lấy các chữ số
+        let digits = this.value.replace(/[^0-9]/g, '');
+        if (digits.length > 10) {
+          digits = digits.slice(0, 10);
+        }
+        
+        // Thêm khoảng cách tự động: XXX XXX XXXX
+        let formatted = '';
+        if (digits.length > 0) {
+          if (digits.length <= 3) {
+            formatted = digits;
+          } else if (digits.length <= 6) {
+            formatted = digits.slice(0, 3) + ' ' + digits.slice(3);
+          } else {
+            formatted = digits.slice(0, 3) + ' ' + digits.slice(3, 6) + ' ' + digits.slice(6);
+          }
+        }
+        this.value = formatted;
+        
+        const errorDiv = document.getElementById('phone-error');
+        if (errorDiv) errorDiv.style.display = 'none';
+        this.style.borderColor = '';
+      });
+
+      // 2. Khi nhấn ra ngoài (blur): Chỉ hiển thị lỗi khi số điện thoại nhập sai định dạng 10 chữ số
+      phoneInput.addEventListener('blur', function(e) {
+        const digits = this.value.replace(/[^0-9]/g, '');
+        const errorDiv = document.getElementById('phone-error');
+        if (digits.length > 0) {
+          if (digits.length !== 10 || !/^0/.test(digits)) {
+            if (errorDiv) {
+              errorDiv.innerText = 'Số điện thoại bắt đầu bằng số 0 và đủ 10 số';
+              errorDiv.style.display = 'block';
+            }
+            this.style.borderColor = 'var(--danger)';
+          } else {
+            if (errorDiv) errorDiv.style.display = 'none';
+            this.style.borderColor = '';
+          }
+        } else {
+          if (errorDiv) errorDiv.style.display = 'none';
+          this.style.borderColor = '';
+        }
+      });
     }
 
     function closeSuccessModal() {
