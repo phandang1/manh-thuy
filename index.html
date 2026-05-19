@@ -1729,6 +1729,23 @@
       }
     }
   </style>
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1306508194958247');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1306508194958247&ev=PageView&noscript=1" />
+  </noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -2377,6 +2394,31 @@
       const notes = document.getElementById('notes').value || '';
       const quantity = document.getElementById('quantity').value;
       const totalPrice = document.getElementById('total-price').innerText;
+      
+      // Calculate Purchase Value for Meta Pixel (robust extraction)
+      let purchaseValue = 189000;
+      try {
+        purchaseValue = parseInt(totalPrice.replace(/[^0-9]/g, ''), 10) || 189000;
+      } catch (e) {
+        console.error('Error parsing purchase value:', e);
+      }
+      
+      // Meta Pixel Purchase Event - Bulletproof instant trigger with console logs
+      console.log('--- Form submit triggered ---');
+      try {
+        if (typeof window.fbq === 'function') {
+          console.log('Sending Purchase event (value: ' + purchaseValue + ' VND) to Meta Pixel...');
+          window.fbq('track', 'Purchase', {
+            value: purchaseValue,
+            currency: 'VND'
+          });
+          console.log('Purchase event sent successfully!');
+        } else {
+          console.warn('window.fbq is not a function! Adblocker or tracking protection might be active.');
+        }
+      } catch (err) {
+        console.error('Error triggering Facebook Pixel Purchase:', err);
+      }
       
       const formData = new URLSearchParams();
       formData.append('form_name', 'Đơn Hàng Mạnh Thủy (Landing Page)');
